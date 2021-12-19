@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <style>
+    /*set border to the form*/
+    
+    form {
+      border: 3px solid #f1f1f1;
+    }
+    /*assign full width inputs*/
+    
+    input[type=text],
+    input[type=password] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    /*set a style for the buttons*/
+    
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+    }
+    /* set a hover effect for the button*/
+    
+    button:hover {
+      opacity: 0.8;
+    }
+    /*set extra style for the cancel button*/
+    
+    .cancelbtn {
+      width: auto;
+      padding: 10px 18px;
+      background-color: #f44336;
+    }
+    /*centre the display image inside the container*/
+    
+    .imgcontainer {
+      text-align: center;
+      margin: 24px 0 12px 0;
+    }
+    /*set image properties*/
+    
+    img.avatar {
+      width: 40%;
+      border-radius: 50%;
+    }
+    /*set padding to the container*/
+    
+    .container {
+      padding: 16px;
+    }
+    /*set the forgot password text*/
+    
+    span.psw {
+      float: right;
+      padding-top: 16px;
+    }
+    /*set styles for span and cancel button on small screens*/
+    
+    @media screen and (max-width: 300px) {
+      span.psw {
+        display: block;
+        float: none;
+      }
+      .cancelbtn {
+        width: 100%;
+      }
+    }
+  </style>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+   
+    <div class="container" style="background-color:#f1f1f1" >
+      <h1 align="center">Edit Student</h1>
+    </div>
+    <div class="container">
+    <form action="/edit" method="post">
+      <input type="hidden" name="_id" id="_id" value="" />
+      First Name :
+      <input type="text" name="firstname" id="firstname" value="" />
+      <br /><br />
+      Last Name :
+      <input type="text" name="lastname" id="lastname" value="" />
+      <br /><br />
+      Email :<input type="text" name="email" id="email" value="" /> <br /><br />
+      <!-- <input type="submit" value="Edit" /> -->
+      <button  type="submit" value="Edit">Edit</button>
+    </form>
+  </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      let param = window.location.href.split("/");
+      var _id = param.slice(-1)[0];
+      $(document).ready(async function () {
+        var res = await fetch("/editstudent", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({ _id: _id }),
+        });
+
+        var data = await res.json();
+        $("#_id").val(_id);
+        $("#firstname").val(data.data.firstname);
+        $("#lastname").val(data.data.lastname);
+        $("#email").val(data.data.email);
+      });
+    </script>
+  </body>
+</html>
